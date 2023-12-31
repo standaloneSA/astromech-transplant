@@ -2,20 +2,13 @@
 Provides a motor controller
 """
 
-from flask import Flask
-from flask_restx import Resource, Api
 from gpiozero import Motor
-
-
-
-app = Flask(__name__)
-api = Api(app)
 
 class MockMotor:
     """ Create a generic class with the methods to look like a motor """
-    def __init__(self, pin1, pin2, pwm):
-        self.pin1 = pin1
-        self.pin2 = pin2
+    def __init__(self, forward_pin, backward_pin, pwm):
+        self.pin1 = forward_pin
+        self.pin2 = backward_pin
         self.pwm = pwm
         self.speed = 0
         self.direction = None
