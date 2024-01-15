@@ -42,19 +42,27 @@ def check_pins(pin):
         
 def show_pins():
     print("####")
+    get_state()
     print("Here are the pin states")
     print(f"RED: {str(GPIO.input(RED_PIN))}")
     print(f"ORANGE: {str(GPIO.input(ORANGE_PIN))}")
     print(f"YELLOW: {str(GPIO.input(YELLOW_PIN))}")
+    print("")
 
 def get_state():
     if GPIO.input(RED_PIN):
-        print("Location: Center")
-    if GPIO.input(ORANGE_PIN):
+        if GPIO.input(ORANGE_PIN):
+            print("Hard Left")
+        elif GPIO.input(YELLOW_PIN):
+            print("Hard Right")
+        else:
+            print("Location: Center")
+    elif GPIO.input(ORANGE_PIN):
         print("Left of 50%")
-    if GPIO.input(YELLOW_PIN):
+    elif GPIO.input(YELLOW_PIN):
         print("Right of 50%")
-
+    else:
+        print("Unknown")
 # Add event detection for each input pin
 for input_pin in input_pins:
     GPIO.add_event_detect(input_pin, GPIO.RISING, callback=check_pins, bouncetime=500)
