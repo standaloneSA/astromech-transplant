@@ -34,8 +34,12 @@ for input_pin in input_pins:
     GPIO.setup(input_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # Function to call when any input pin goes high
-def on_input_high(pin):
-    print(f"Input pin {pin} went high!")
+def check_pins(pin):
+    if GPIO.input(pin):
+        print(f"Input pin {pin} went high!")
+    else:
+        print(f"Input pin {pin} went low!")
+        
 
 # Add event detection for each input pin
 for input_pin in input_pins:
