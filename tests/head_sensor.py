@@ -40,13 +40,19 @@ for input_pin in input_pins:
 def check_pins(pin):
     get_state()
         
+def show_pins():
+    print("####")
+    print("Here are the pin states")
+    print(f"RED: {str(GPIO.input(RED_PIN))}")
+    print(f"ORANGE: {str(GPIO.input(ORANGE_PIN))}")
+    print(f"YELLOW: {str(GPIO.input(YELLOW_PIN))}")
 
 def get_state():
     if GPIO.input(RED_PIN):
         print("Location: Center")
     if GPIO.input(ORANGE_PIN):
         print("Left of 50%")
-    if GPIO.input(RED_PIN):
+    if GPIO.input(YELLOW_PIN):
         print("Right of 50%")
 
 # Add event detection for each input pin
@@ -58,6 +64,7 @@ try:
     GPIO.output(output_pin, GPIO.HIGH)
 
     # Run your main code here
+    show_pins()
 
     # Keep the program running
     while True:
@@ -65,6 +72,7 @@ try:
 
 except KeyboardInterrupt:
     # Clean up GPIO configuration
+    show_pins()
     print("Cleaning up")
     GPIO.cleanup()
 
