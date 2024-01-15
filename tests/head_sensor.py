@@ -39,10 +39,6 @@ for input_pin in input_pins:
 # Function to call when any input pin goes high
 def check_pins(pin):
     get_state()
-    if GPIO.input(pin):
-        print(f"Input pin {pin} went high!")
-    else:
-        print(f"Input pin {pin} went low!")
         
 
 def get_state():
@@ -55,7 +51,7 @@ def get_state():
 
 # Add event detection for each input pin
 for input_pin in input_pins:
-    GPIO.add_event_detect(input_pin, GPIO.RISING, callback=check_pins, bouncetime=200)
+    GPIO.add_event_detect(input_pin, GPIO.RISING, callback=check_pins, bouncetime=500)
 
 try:
     # Set the output pin high
