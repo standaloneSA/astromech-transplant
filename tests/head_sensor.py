@@ -57,5 +57,6 @@ try:
 
 except KeyboardInterrupt:
     # Clean up GPIO configuration
+    print("Cleaning up")
     GPIO.cleanup()
 
