@@ -43,7 +43,7 @@ def check_pins(pin):
 
 # Add event detection for each input pin
 for input_pin in input_pins:
-    GPIO.add_event_detect(input_pin, GPIO.RISING, callback=on_input_high, bouncetime=200)
+    GPIO.add_event_detect(input_pin, GPIO.RISING, callback=check_pins, bouncetime=200)
 
 try:
     # Set the output pin high
