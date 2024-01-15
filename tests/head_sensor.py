@@ -13,8 +13,6 @@ Orange:
 Yellow: 
   low:
   high: right of 50%
-
-
 """
 
 import RPi.GPIO as GPIO
@@ -22,9 +20,14 @@ import RPi.GPIO as GPIO
 # Set the GPIO mode to BCM
 GPIO.setmode(GPIO.BCM)
 
+BROWN_PIN=16
+RED_PIN=19
+ORANGE_PIN=20
+YELLOW_PIN=21
+
 # Define the GPIO pins
-output_pin = 16  # Replace with your desired output pin
-input_pins = [19, 20, 21]  # Replace with your desired input pins
+output_pin = BROWN_PIN # Replace with your desired output pin
+input_pins = [RED_PIN, ORANGE_PIN, YELLOW_PIN]  # Replace with your desired input pins
 
 # Set the output pin as an output
 GPIO.setup(output_pin, GPIO.OUT)
@@ -35,11 +38,20 @@ for input_pin in input_pins:
 
 # Function to call when any input pin goes high
 def check_pins(pin):
+    get_state()
     if GPIO.input(pin):
         print(f"Input pin {pin} went high!")
     else:
         print(f"Input pin {pin} went low!")
         
+
+def get_state():
+    if GPIO.input(RED_PIN):
+        print("Location: Center")
+    if GPIO.input(ORANGE_PIN):
+        print("Left of 50%")
+    if GPIO.input(RED_PIN):
+        print("Right of 50%")
 
 # Add event detection for each input pin
 for input_pin in input_pins:
