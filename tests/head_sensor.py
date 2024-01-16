@@ -85,15 +85,14 @@ def get_state():
 
 
 def init():
-    # Add event detection for each input pin
-    for input_pin in input_pins:
-        GPIO.add_event_detect(input_pin, GPIO.RISING, callback=check_pins, bouncetime=500)
-    # Set the output pin as an output
-    GPIO.setup(output_pin, GPIO.OUT)
-
     # Set the input pins as inputs with pull-down resistors
     for input_pin in input_pins:
         GPIO.setup(input_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.add_event_detect(input_pin, GPIO.RISING, callback=check_pins, bouncetime=500)
+
+    # Set the output pin as an output
+    GPIO.setup(output_pin, GPIO.OUT)
+
 
     # Setup sounds
     mixer.init()
