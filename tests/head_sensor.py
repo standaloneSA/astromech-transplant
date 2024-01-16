@@ -115,5 +115,5 @@ if __name__ == '__main__':
         # Clean up GPIO configuration
         show_pins()
         print("Cleaning up")
-        GPIO.cleanup()
+        #GPIO.cleanup()
 
