@@ -105,11 +105,13 @@ if __name__ == '__main__':
 
 
         head_motor = Motor(12, 13)
+        head_motor.left = head_motor.forward
+        head_motor.right = head_motor.reverse
 
         show_pins()
 
         while True:
-            head_motor.forward(speed=0.1)
+            head_motor.right(speed=0.4)
 
     except KeyboardInterrupt:
         # Clean up GPIO configuration
