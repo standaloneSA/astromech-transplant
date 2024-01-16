@@ -14,7 +14,10 @@ Yellow:
   low:
   high: right of 50%
 """
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 
+from pygame import mixer
 import RPi.GPIO as GPIO
 
 # Set the GPIO mode to BCM
@@ -36,6 +39,25 @@ GPIO.setup(output_pin, GPIO.OUT)
 for input_pin in input_pins:
     GPIO.setup(input_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
+# Setup sounds
+mixer.init()
+
+def alert(type=""):
+    alert_map = {
+        "short_sass": "17",
+        "emergency": "1",
+        "overload": "14",
+        "info": "19",
+        "bored": "13",
+    }
+    if num in alert_map.keys():
+        filename = f"astromech_{alert}.mp3"
+    else:
+        filename = "astromech_18.mp3"
+
+    mixer.music.load(filename)
+    mixer.music.play()
+
 # Function to call when any input pin goes high
 def check_pins(pin):
     get_state()
@@ -52,10 +74,14 @@ def show_pins():
 def get_state():
     if GPIO.input(RED_PIN):
         if GPIO.input(ORANGE_PIN):
+            alert("info")
             print("Hard Left")
+
         elif GPIO.input(YELLOW_PIN):
+            alert("info")
             print("Hard Right")
         else:
+            alert("short_sass")
             print("Location: Center")
     elif GPIO.input(ORANGE_PIN):
         print("Left of 50%")
