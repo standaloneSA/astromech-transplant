@@ -42,7 +42,7 @@ for input_pin in input_pins:
 # Setup sounds
 mixer.init()
 
-def alert(type=""):
+def alert(alertname=""):
     alert_map = {
         "short_sass": "17",
         "emergency": "1",
@@ -50,8 +50,8 @@ def alert(type=""):
         "info": "19",
         "bored": "13",
     }
-    if num in alert_map.keys():
-        filename = f"astromech_{alert}.mp3"
+    if alertname in alert_map.keys():
+        filename = f"astromech_{alert_map[alertname]}.mp3"
     else:
         filename = "astromech_18.mp3"
 
