@@ -99,11 +99,11 @@ def init():
     mixer.init()
 
 if __name__ == '__main__':
+    init()
     try:
         # Set the output pin high
         GPIO.output(output_pin, GPIO.HIGH)
 
-        init()
 
         head_motor = Motor(12, 13)
 
