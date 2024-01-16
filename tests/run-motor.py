@@ -10,7 +10,8 @@ import RPi.GPIO as GPIO
 import curses
 
 def go_forward(speed, motors):
-    fo
+    """
+    """
 
 def main():
     print(list_motors())

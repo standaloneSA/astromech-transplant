@@ -20,6 +20,8 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 from pygame import mixer
 import RPi.GPIO as GPIO
 
+from gpiozero import Motor
+
 # Set the GPIO mode to BCM
 GPIO.setmode(GPIO.BCM)
 
@@ -32,15 +34,6 @@ YELLOW_PIN=21
 output_pin = BROWN_PIN # Replace with your desired output pin
 input_pins = [RED_PIN, ORANGE_PIN, YELLOW_PIN]  # Replace with your desired input pins
 
-# Set the output pin as an output
-GPIO.setup(output_pin, GPIO.OUT)
-
-# Set the input pins as inputs with pull-down resistors
-for input_pin in input_pins:
-    GPIO.setup(input_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-
-# Setup sounds
-mixer.init()
 
 def alert(alertname=""):
     alert_map = {
@@ -89,24 +82,39 @@ def get_state():
         print("Right of 50%")
     else:
         print("Unknown")
-# Add event detection for each input pin
-for input_pin in input_pins:
-    GPIO.add_event_detect(input_pin, GPIO.RISING, callback=check_pins, bouncetime=500)
 
-try:
-    # Set the output pin high
-    GPIO.output(output_pin, GPIO.HIGH)
 
-    # Run your main code here
-    show_pins()
+def init():
+    # Add event detection for each input pin
+    for input_pin in input_pins:
+        GPIO.add_event_detect(input_pin, GPIO.RISING, callback=check_pins, bouncetime=500)
+    # Set the output pin as an output
+    GPIO.setup(output_pin, GPIO.OUT)
 
-    # Keep the program running
-    while True:
-        pass
+    # Set the input pins as inputs with pull-down resistors
+    for input_pin in input_pins:
+        GPIO.setup(input_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-except KeyboardInterrupt:
-    # Clean up GPIO configuration
-    show_pins()
-    print("Cleaning up")
-    GPIO.cleanup()
+    # Setup sounds
+    mixer.init()
+
+if __name__ == '__main__':
+    try:
+        # Set the output pin high
+        GPIO.output(output_pin, GPIO.HIGH)
+
+        init()
+
+        head_motor = Motor(12, 13)
+
+        show_pins()
+
+        while True:
+            head_motor.forward(speed=0.2)
+
+    except KeyboardInterrupt:
+        # Clean up GPIO configuration
+        show_pins()
+        print("Cleaning up")
+        GPIO.cleanup()
 
