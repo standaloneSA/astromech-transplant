@@ -109,7 +109,7 @@ if __name__ == '__main__':
         show_pins()
 
         while True:
-            head_motor.reverse(speed=0.4)
+            head_motor.backward(speed=0.4)
 
     except KeyboardInterrupt:
         # Clean up GPIO configuration
