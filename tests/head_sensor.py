@@ -51,9 +51,9 @@ def alert(alertname=""):
         "bored": "13",
     }
     if alertname in alert_map.keys():
-        filename = f"astromech_{alert_map[alertname]}.mp3"
+        filename = f"media/astromech_{alert_map[alertname]}.mp3"
     else:
-        filename = "astromech_18.mp3"
+        filename = "media/astromech_18.mp3"
 
     mixer.music.load(filename)
     mixer.music.play()
